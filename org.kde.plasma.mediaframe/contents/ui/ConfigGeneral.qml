@@ -49,51 +49,12 @@ Item {
      * Image.Pad - the image is not transformed
      */
     property int fillMode: Image.PreserveAspectFit
+    property string description: "The image is scaled uniformly to fit without cropping"
 
     ListModel {
         id: fillModeModel
         
-        ListElement {
-            text: "Stretch"
-            value: Image.Stretch
-            description: "The image is scaled to fit"
-            }
         
-        ListElement {
-            text: "Preserve aspect fit"
-            value: Image.PreserveAspectFit
-            description: "The image is scaled uniformly to fit without cropping"
-        }
-        
-        ListElement {
-            text: "Preserve aspect crop"
-            value: Image.PreserveAspectCrop
-            description: "The image is scaled uniformly to fill, cropping if necessary"
-        }
-        
-        ListElement {
-            text: "Tile"
-            value: Image.Tile
-            description: "The image is duplicated horizontally and vertically"
-        }
-        
-        ListElement {
-            text: "Tile vertically"
-            value: Image.TileVertically
-            description: "The image is stretched horizontally and tiled vertically"
-        }
-        
-        ListElement {
-            text: "Tile horizontally"
-            value: Image.TileHorizontally
-            description: "The image is stretched vertically and tiled horizontally"
-        }
-        
-        ListElement {
-            text: "Pad"
-            value: Image.Pad
-            description: "The image is not transformed"
-        }
     }
 
 
@@ -125,50 +86,101 @@ Item {
                 maximumValue: 24*(60*60)
             } // end SpinBox
         
-        
-        
             
             // Row 2, Col 1
             Label {
                 
-                //width: 100
                 id: fillLabel
-                //anchors.fill: parent
                 text: i18n("Fill mode:")
             }
 
                 
             // Row 2, Col 2  
-             
             ComboBox {
                 id: comboBox
                 anchors.left: parent
                 anchors.right: parent
                 width: units.gridUnit * 10
                 currentIndex: fillModeToIndex(fillMode)
-                model: fillModeModel
+                model: 
+                    [
+                         {
+                            text: i18n("Stretch"),
+                            value: Image.Stretch
+                            },
+                        
+                         {
+                            text: i18n("Preserve aspect fit"),
+                            value: Image.PreserveAspectFit
+                
+                        },
+                        
+                         {
+                            text: i18n("Preserve aspect crop"),
+                            value: Image.PreserveAspectCrop
+                        },
+                        
+                         {
+                            text: i18n("Tile"),
+                            value: Image.Tile
+                        },
+
+                         {
+                            text: i18n("Tile vertically"),
+                            value: Image.TileVertically
+                        },
+                        
+                         {
+                            text: i18n("Tile horizontally"),
+                            value: Image.TileHorizontally
+                        },
+                        
+                         {
+                            text: i18n("Pad"),
+                            value: Image.Pad
+                        }
+
+                    ] // end of ComboBox model
                 
                     
 
-                onActivated: root.fillMode = fillModeModel.get(index).value
+                onCurrentIndexChanged: {
+                    root.fillMode = comboBox.currentIndex
+                    fillModeToIndex(root.fillMode)
+                    //console.log(comboBox.currentIndex);
+                }
 
-                onCurrentIndexChanged: fillModeDescription.text = fillModeModel.get(currentIndex).description
 
                 function fillModeToIndex(fillMode) {
-                    if(fillMode == Image.Stretch)
+                    //console.log("function called");
+                    if(fillMode == Image.Stretch) {
+                        fillModeDescription.text = i18n( "The image is scaled to fit the frame");
                         return 0
-                    else if(fillMode == Image.PreserveAspectFit)
+                    }
+                    else if(fillMode == Image.PreserveAspectFit) {
+                        fillModeDescription.text = i18n("The image is scaled uniformly to fit without cropping");
                         return 1
-                    else if(fillMode == Image.PreserveAspectCrop)
+                    }
+                    else if(fillMode == Image.PreserveAspectCrop) {
+                        fillModeDescription.text = i18n( "The image is scaled uniformly to fill, cropping if necessary");
                         return 2
-                    else if(fillMode == Image.Tile)
+                    }
+                    else if(fillMode == Image.Tile) {
+                        fillModeDescription.text = i18n("The image is duplicated horizontally and vertically");
                         return 3
-                    else if(fillMode == Image.TileVertically)
+                    }
+                    else if(fillMode == Image.TileVertically) {
+                        fillModeDescription.text = i18n("The image is stretched horizontally and tiled vertically");
                         return 4
-                    else if(fillMode == Image.TileHorizontally)
+                    }
+                    else if(fillMode == Image.TileHorizontally) {
+                        fillModeDescription.text = i18n("The image is stretched vertically and tiled horizontally");
                         return 5
-                    else if(fillMode == Image.Pad)
+                    }
+                    else if(fillMode == Image.Pad) {
+                        fillModeDescription.text = i18n("The image is not transformed");
                         return 6
+                    }
                 } // end of fillModeToIndex function
             } // end of ComboBox and related functions
             
