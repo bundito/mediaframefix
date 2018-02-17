@@ -17,7 +17,7 @@
  */
 
 import QtQuick 2.7
-import QtQuick.Controls 1.1
+import QtQuick.Controls 1.5
 import QtQuick.Layouts 1.1
 
 import org.kde.plasma.plasmoid 2.0
@@ -28,7 +28,7 @@ import org.kde.kquickcontrolsaddons 2.0 as KQuickAddons
 
 Item {
     id: root
-    //width: parent.width
+    //width: units.gridUnit * 2.0
     //height: parent.height
 
     property alias cfg_interval: intervalSpinBox.value
@@ -98,9 +98,20 @@ Item {
 
 
     ColumnLayout {    
-        RowLayout {
-            // Row 1, Col 1
+        spacing: 20
+        //width: units.gridUnit * 2.0
+
+        Grid {
+           // width: units.gridUnit * 2.0
+            columns: 2
+            rows: 7
+            rowSpacing: 20
+            columnSpacing: 10
+            verticalItemAlignment: Qt.AlignVCenter
+            
+        
             Label {
+                //width: 
                 text: i18n("Change picture every")
             }
 
@@ -113,24 +124,30 @@ Item {
                 // Once a day should be high enough
                 maximumValue: 24*(60*60)
             } // end SpinBox
-        }
         
-        RowLayout {
+        
+        
+            
             // Row 2, Col 1
             Label {
+                
+                //width: 100
                 id: fillLabel
                 //anchors.fill: parent
                 text: i18n("Fill mode:")
             }
 
                 
-            // Row 2, Col 2    
+            // Row 2, Col 2  
+             
             ComboBox {
                 id: comboBox
-                width: 200
-                //anchors.fill: parent
+                anchors.left: parent
+                anchors.right: parent
+                width: units.gridUnit * 10
                 currentIndex: fillModeToIndex(fillMode)
                 model: fillModeModel
+                
                     
 
                 onActivated: root.fillMode = fillModeModel.get(index).value
@@ -154,19 +171,22 @@ Item {
                         return 6
                 } // end of fillModeToIndex function
             } // end of ComboBox and related functions
-            }
-
-            RowLayout {
+            
+            
             // Row 3, Col 1 (cheater to fill empty cell)
-            Label {text: ""} 
+            Label {
+                width: 10
+                text: ""
+                } 
+            
 
             //Row 3, Col 2
             Label {
                 id: fillModeDescription
                 text: i18n("The image is scaled uniformly to fit without cropping")
             }
-        }
-         // end of top section GridLayout
+        
+        } // end of top section GridLayout
     
         // these CheckBoxes should take over as their own ColumnLayout entries
         CheckBox {
