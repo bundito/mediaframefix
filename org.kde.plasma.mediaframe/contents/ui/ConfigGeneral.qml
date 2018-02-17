@@ -28,9 +28,7 @@ import org.kde.kquickcontrolsaddons 2.0 as KQuickAddons
 
 Item {
     id: root
-    //width: units.gridUnit * 2.0
-    //height: parent.height
-
+   
     property alias cfg_interval: intervalSpinBox.value
     property alias cfg_randomize: randomizeCheckBox.checked
     property alias cfg_pauseOnMouseOver: pauseOnMouseOverCheckBox.checked
@@ -49,14 +47,6 @@ Item {
      * Image.Pad - the image is not transformed
      */
     property int fillMode: Image.PreserveAspectFit
-    property string description: "The image is scaled uniformly to fit without cropping"
-
-    ListModel {
-        id: fillModeModel
-        
-        
-    }
-
 
     ColumnLayout {    
         spacing: 20
@@ -68,11 +58,10 @@ Item {
             rows: 7
             rowSpacing: 20
             columnSpacing: 10
-            verticalItemAlignment: Qt.AlignVCenter
+            verticalItemAlignment: Grid.AlignVCenter
             
-        
+            // Row 1, Col 1
             Label {
-                //width: 
                 text: i18n("Change picture every")
             }
 
@@ -89,7 +78,6 @@ Item {
             
             // Row 2, Col 1
             Label {
-                
                 id: fillLabel
                 text: i18n("Fill mode:")
             }
@@ -98,8 +86,6 @@ Item {
             // Row 2, Col 2  
             ComboBox {
                 id: comboBox
-                anchors.left: parent
-                anchors.right: parent
                 width: units.gridUnit * 10
                 currentIndex: fillModeToIndex(fillMode)
                 model: 
@@ -221,9 +207,9 @@ Item {
             text: i18n("Left click image opens in external viewer")
         }
 
-  } // should end ColumnLayout
+  } // end ColumnLayout
 
- }
+ } // end Item
         
 
 
